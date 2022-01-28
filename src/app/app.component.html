@@ -1,0 +1,219 @@
+<mat-toolbar>
+  <!-- <span>My Application</span> -->
+</mat-toolbar>
+<!-- <button mat-raised-button color="primary">Primary</button> -->
+<div class="tabClass">
+  <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabClicked()">
+    <mat-tab label="Sign in">
+      <mat-card class="example-card">
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit(loginForm)"
+          #formDirective="ngForm"
+        >
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              class="asterisk_input"
+              matInput
+              placeholder="email"
+              formControlName="email"
+              autocomplete="off"
+            />
+            <mat-error
+              class="mat-error"
+              *ngIf="formControl.email.errors?.required&&submitted"
+              >Email required</mat-error
+            >
+            <mat-error *ngIf="formControl.email.errors?.email&&submitted"
+              >Invalid Email</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              placeholder="password"
+              [type]="hide?'password':'text'"
+              formControlName="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+
+            <mat-error *ngIf="formControl.password.errors?.required&&submitted"
+              >Password required</mat-error
+            >
+            <mat-error *ngIf="formControl.password.errors?.maxlength&&submitted"
+              >Maximum length exceeded</mat-error
+            >
+          </mat-form-field>
+          <!-- </div> -->
+          <mat-card-actions style="text-align:center">
+            <button mat-raised-button color="primary" type="submit">
+              Login
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card>
+    </mat-tab>
+    <mat-tab label="Sign Up">
+      <mat-card class="example-card">
+        <form [formGroup]="signupForm" (ngSubmit)="signUpSubmit(signupForm)">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input
+              matInput
+              placeholder="firstName"
+              formControlName="firstName"
+            />
+            <mat-error
+              *ngIf="signUpControl.firstName.errors?.required&&signUpSubmitted"
+              >First Name required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput placeholder="lastName" formControlName="lastName" />
+            <mat-error
+              *ngIf="signUpControl.lastName.errors?.required&&signUpSubmitted"
+              >Last Name required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Age</mat-label>
+            <input
+              matInput
+              type="number"
+              placeholder="age"
+              formControlName="age"
+            />
+            <mat-error
+              *ngIf="signUpControl.age.errors?.required&&signUpSubmitted"
+              >Age required</mat-error
+            >
+          </mat-form-field>
+          <mat-radio-group
+            aria-label="Select an option"
+            class="radio"
+            formControlName="gender"
+          >
+            <mat-radio-button value="male">Male</mat-radio-button>
+            <span style="margin: 5px;"></span>
+            <mat-radio-button value="female">Female</mat-radio-button>
+
+            <mat-error
+              *ngIf="signUpControl.gender.errors?.required&&signUpSubmitted"
+              ><small
+                style="margin: 9px;
+    color: red;
+    font-size: x-small;"
+                >Gender required</small
+              >
+            </mat-error>
+          </mat-radio-group>
+          <span style="display: flex;height: 1rem;"></span>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="date" />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error
+              *ngIf="signUpControl.date.errors?.required&&signUpSubmitted"
+              >date required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let item of role" [value]="item.id"
+                >{{item.name}}</mat-option
+              >
+            </mat-select>
+            <mat-error
+              *ngIf="signUpControl.role.errors?.required&&signUpSubmitted"
+              >Role required</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              placeholder="password"
+              [type]="hide?'password':'text'"
+              formControlName="password"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+
+            <mat-error
+              *ngIf="signUpControl
+.password.errors?.required&&signUpSubmitted
+"
+              >Password required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              placeholder="password"
+              [type]="hide?'password':'text'"
+              formControlName="confirmPassword"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+            >
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+
+            <mat-error
+              *ngIf="signUpControl
+.confirmPassword?.errors?.validatePasswordConfirmation
+
+&&signUpSubmitted
+"
+              >Password missmatches</mat-error
+            >
+          </mat-form-field>
+
+          <!-- </div> -->
+          <mat-card-actions style="text-align:center">
+            <button
+              mat-raised-button
+              #tooltip="matTooltip"
+              matTooltip="For registering the user"
+              color="primary"
+              type="submit"
+            >
+              Register
+            </button>
+          </mat-card-actions>
+        </form>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+</div>
